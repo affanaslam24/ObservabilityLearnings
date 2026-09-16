@@ -37,6 +37,7 @@ USing Docker to initiate a Loki server:
 docker run -d --name=loki -p 3100:3100 grafana/loki
 
 Then this server will be connected to the APP and then to the Grafana Server through DataSource.
+Add the URL: host: "http://127.0.0.1:3100" as the HOst for options in Loki
 
 - Run the Server
 - Add the Loki Package to the App and add the Server as a host to the Code itself
@@ -51,3 +52,24 @@ APP -> Exposed
 PromServer -> Docker -> Connects to APP Target
 LokiServer -> Docker -> App's Logger
 Grafana -> Docker Compose -> Datasource Connectivity to PromServer + LokiServer
+
+
+
+---
+
+Docker Commands:
+- PromServer:
+    Docker compose up on the compose.yml file
+- Grafana:
+    docker run -d -p 3000:3001 --name=grafana grafana/grafana-oss
+- Loki:
+    docker run -d --name=loki -p 3100:3100 grafana/loki
+
+---
+
+Links and stuff:
+App exposed: 192.168.1.50:3000
+    Metrics: 192.168.1.50:3000/metrics
+PromServer in Compose uses appsNodeBridge Network, and to connect one docker to another docker: http://host.docker.internal:9090
+Grafana: localHost:3001
+Loki server: localHost:3100 and to visualise - localhost:3100/metrics
