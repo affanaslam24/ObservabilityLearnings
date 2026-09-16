@@ -68,8 +68,8 @@ Docker Commands:
 ---
 
 Links and stuff:
-App exposed: 192.168.1.50:3000
+- App exposed: 192.168.1.50:3000
     Metrics: 192.168.1.50:3000/metrics
-PromServer in Compose uses appsNodeBridge Network, and to connect one docker to another docker: http://host.docker.internal:9090
-Grafana: localHost:3001
-Loki server: localHost:3100 and to visualise - localhost:3100/metrics
+- PromServer in Compose uses appsNodeBridge Network, and to connect one docker to another docker: http://host.docker.internal:9090
+- Grafana: localHost:3001
+- Loki server: localHost:3100 and to visualise - localhost:3100/metrics
