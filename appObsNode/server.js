@@ -6,6 +6,11 @@ const {heavyTask} = require("./util")
 // FOR STEP4
 const responseTime = require("response-time");
 
+// STEP6 Add LOKI
+const { createLogger, format, transports } = require("winston");
+const LokiTransport = require("winston-loki");
+
+
 
 const app = express()
 const PORT = process.env.PORT || 3000
@@ -50,18 +55,41 @@ const totalReqCounter = new client.Counter({
     help: 'tells total number of req'
 })
 
+
+// ----- LOKI ADDITION ------
+const options = {
+    transports: [
+        new LokiTransport({
+            labels: {
+                // because we need a wau to look at this log
+                appName: 'express node'
+            },
+            host: "http://127.0.0.1:3100"
+        })
+    ]
+}
+
+const logger = createLogger(options)
+
+
+// -- * --
+
+
 app.get("/", (req, res)=> {
+    logger.info('Req Req Req')
     res.json({message: "Backend is running!"})
 })
 
 app.get("/slow", async(req, res) => {
     try {
+        logger.info('Req Req Bay bay')
         const timeTaken = await heavyTask()
         return res.json({
             status: "Success",
             message: `Task took ${timeTaken}ms`
         })
     } catch (error) {
+        logger.error(error.message)
         return res.status(300).json({
             status: "Error",
             error: error.message

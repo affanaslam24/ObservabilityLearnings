@@ -30,3 +30,24 @@ App -> Node Deployed in LocalHost -> Prom Server Through Docker Compose connecte
 
 ---
 
+NEXT UP, we will be ADDING LOKI to the Stack -
+
+# LOKI - Logging
+USing Docker to initiate a Loki server:
+docker run -d --name=loki -p 3100:3100 grafana/loki
+
+Then this server will be connected to the APP and then to the Grafana Server through DataSource.
+
+- Run the Server
+- Add the Loki Package to the App and add the Server as a host to the Code itself
+(This is opposite of what was happening in Grafana. In grafana, you were supposed to be Adding the Exposed app to the Target in the PromServers Config file, here you add the LokiServer to the Application)
+
+
+---
+
+### Connections:
+
+APP -> Exposed
+PromServer -> Docker -> Connects to APP Target
+LokiServer -> Docker -> App's Logger
+Grafana -> Docker Compose -> Datasource Connectivity to PromServer + LokiServer
